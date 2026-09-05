@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>آشنا | دوست‌یابی هوشمند</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #8B5CF6;
+      --primary-dark: #7C3AED;
+      --secondary: #EC4899;
+      --bg: #0F0F13;
+      --card: #1A1A24;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --success: #10B981;
+      --danger: #EF4444;
+      --border: #2D2D3A;
+      --online: #22C55E;
+      --gold: #FBBF24;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Vazirmatn', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      border: none;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(139, 92, 246, 0.45); }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-gold {
+      background: linear-gradient(135deg, #F59E0B, #FBBF24);
+      color: #000;
+      font-weight: 700;
+    }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-block { width: 100%; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+    .landing {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .landing::before {
+      content: '';
+      position: absolute;
+      top: -20%; right: -10%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .landing::after {
+      content: '';
+      position: absolute;
+      bottom: -15%; left: -10%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2rem;
+      position: relative;
+      z-index: 10;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .logo-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      -webkit-text-fill-color: white;
+    }
+    .nav-links { display: flex; gap: 1rem; align-items: center; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      z-index: 5;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 1.2rem;
+      max-width: 700px;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin-bottom: 2.2rem;
+      line-height: 1.7;
+    }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-size: 1.7rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+    .auth-screen {
+      display: none;
+      min-height: 100vh;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      position: relative;
+    }
+    .auth-screen.active { display: flex; }
+    .auth-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2rem 1.6rem;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .auth-card h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .auth-card .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.8rem;
+      line-height: 1.6;
+    }
+    .auth-tabs {
+      display: flex;
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 1.5rem;
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 0.7rem;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .auth-tab.active { background: var(--primary); color: white; }
+    .form-group { margin-bottom: 1.2rem; text-align: right; }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+    .form-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      text-align: left;
+      direction: ltr;
+    }
+    .form-input:focus { border-color: var(--primary); }
+    .otp-inputs {
+      display: flex;
+      gap: 0.6rem;
+      justify-content: center;
+      direction: ltr;
+      margin-bottom: 1.5rem;
+    }
+    .otp-input {
+      width: 52px;
+      height: 56px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+    }
+    .otp-input:focus { border-color: var(--primary); }
+    .auth-footer {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .auth-footer a {
+      color: var(--primary);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .resend-code {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .resend-code button {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .back-link {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .back-link:hover { color: var(--text); }
+    .demo-hint {
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.25);
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      font-size: 0.8rem;
+      color: #C4B5FD;
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+    }
+
+    .app { display: none; min-height: 100vh; flex-direction: column; }
+    .app.active { display: flex; }
+    .app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15, 15, 19, 0.9);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .app-logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .app-nav { display: flex; gap: 0.5rem; }
+    .app-nav-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-family: inherit;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .app-nav-btn.active { background: rgba(139, 92, 246, 0.15); color: var(--primary); }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
+      max-width: 480px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-stack { position: relative; width: 100%; height: 500px; margin-bottom: 1.5rem; }
+    .profile-card {
+      position: absolute; inset: 0;
+      background: var(--card);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s;
+      border: 1px solid var(--border);
+    }
+    .profile-card.swipe-left { transform: translateX(-150%) rotate(-20deg); opacity: 0; }
+    .profile-card.swipe-right { transform: translateX(150%) rotate(20deg); opacity: 0; }
+    .card-img { width: 100%; height: 68%; object-fit: cover; background: #2D2D3A; }
+    .card-info {
+      padding: 1.1rem 1.3rem;
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 60%, transparent 100%);
+    }
+    .card-name { font-size: 1.4rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem; }
+    .verified {
+      width: 18px; height: 18px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+    }
+    .card-meta { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem; }
+    .card-bio { margin-top: 0.5rem; font-size: 0.85rem; line-height: 1.5; opacity: 0.9; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.6rem; }
+    .tag {
+      background: rgba(139, 92, 246, 0.2);
+      color: #C4B5FD;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 500;
+    }
+    .actions { display: flex; justify-content: center; gap: 1.4rem; margin-bottom: 1rem; }
+    .action-btn {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    .action-btn.dislike { background: var(--card); border: 2px solid var(--border); color: var(--danger); }
+    .action-btn.dislike:hover { background: var(--danger); color: white; transform: scale(1.1); }
+    .action-btn.like { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; }
+    .action-btn.like:hover { transform: scale(1.1); }
+    .action-btn.message {
+      background: var(--card);
+      border: 2px solid var(--border);
+      color: #38BDF8;
+      width: 50px; height: 50px;
+      font-size: 1.25rem;
+    }
+    .action-btn.message:hover { background: #38BDF8; color: #000; transform: scale(1.1); }
+
+    .nearby-grid {
+      display: none;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      width: 100%;
+      padding-bottom: 2rem;
+    }
+    .nearby-grid.active { display: grid; }
+    .nearby-card {
+      background: var(--card);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .nearby-card:hover { transform: translateY(-3px); border-color: var(--primary); }
+    .nearby-img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+    .nearby-info { padding: 0.7rem; }
+    .nearby-name { font-weight: 600; font-size: 0.9rem; }
+    .nearby-dist { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+    .chat-section {
+      display: none;
+      width: 100%; height: 100%;
+      flex-direction: column;
+      position: absolute; inset: 0;
+      background: var(--bg); z-index: 20;
+    }
+    .chat-section.active { display: flex; }
+    .chat-list { flex: 1; overflow-y: auto; }
+    .chat-list-header { padding: 1rem 1.2rem 0.5rem; font-size: 1.25rem; font-weight: 700; }
+    .chat-item {
+      display: flex; align-items: center; gap: 0.9rem;
+      padding: 0.85rem 1.2rem;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(45,45,58,0.5);
+    }
+    .chat-item:hover { background: var(--card); }
+    .chat-item.unread { background: rgba(139, 92, 246, 0.08); }
+    .chat-avatar { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); }
+    .chat-avatar-wrap { position: relative; }
+    .online-dot {
+      position: absolute; bottom: 1px; left: 1px;
+      width: 13px; height: 13px;
+      background: var(--online);
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+    }
+    .chat-item-info { flex: 1; min-width: 0; }
+    .chat-item-top { display: flex; justify-content: space-between; margin-bottom: 0.2rem; }
+    .chat-item-name { font-weight: 600; font-size: 0.95rem; }
+    .chat-item-time { font-size: 0.72rem; color: var(--text-muted); }
+    .chat-item-preview {
+      font-size: 0.82rem; color: var(--text-muted);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .unread-badge {
+      background: var(--primary); color: white;
+      font-size: 0.68rem; font-weight: 700;
+      min-width: 18px; height: 18px;
+      border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .chat-view {
+      display: none; flex-direction: column;
+      height: 100%; position: absolute; inset: 0;
+      background: var(--bg); z-index: 30;
+    }
+    .chat-view.active { display: flex; }
+    .chat-view-header {
+      display: flex; align-items: center; gap: 0.7rem;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(15,15,19,0.95);
+    }
+    .back-btn { background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; }
+    .chat-view-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+    .chat-view-info { flex: 1; }
+    .chat-view-name { font-weight: 600; font-size: 1rem; }
+    .chat-view-status { font-size: 0.75rem; color: var(--online); }
+    .chat-view-status.offline { color: var(--text-muted); }
+    .icon-btn {
+      background: none; border: none; color: var(--text-muted);
+      font-size: 1.15rem; cursor: pointer; padding: 0.35rem;
+    }
+    .messages-container {
+      flex: 1; overflow-y: auto; padding: 1rem;
+      display: flex; flex-direction: column; gap: 0.55rem;
+    }
+    .message {
+      max-width: 78%; padding: 0.65rem 0.95rem;
+      border-radius: 16px; font-size: 0.92rem; line-height: 1.5;
+    }
+    .message.received {
+      background: var(--card); border: 1px solid var(--border);
+      border-bottom-right-radius: 5px; align-self: flex-start;
+    }
+    .message.sent {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white; border-bottom-left-radius: 5px; align-self: flex-end;
+    }
+    .message-time { font-size: 0.68rem; opacity: 0.7; margin-top: 0.25rem; }
+    .typing-indicator {
+      display: none; align-self: flex-start;
+      background: var(--card); border: 1px solid var(--border);
+      padding: 0.7rem 1rem; border-radius: 16px; gap: 4px;
+    }
+    .typing-indicator.show { display: flex; }
+    .typing-dot {
+      width: 6px; height: 6px; background: var(--text-muted);
+      border-radius: 50%; animation: typing 1.4s infinite ease-in-out;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-4px); opacity: 1; }
+    }
+    .limit-notice {
+      display: none;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #FCA5A5;
+      padding: 0.65rem 1rem;
+      font-size: 0.82rem;
+      text-align: center;
+      border-radius: 10px;
+      margin: 0 1rem 0.4rem;
+    }
+    .limit-notice.show { display: block; }
+    .chat-input-area {
+      display: flex; gap: 0.6rem;
+      padding: 0.8rem 1rem;
+      border-top: 1px solid var(--border);
+      background: rgba(15,15,19,0.95);
+      align-items: center;
+    }
+    .chat-input {
+      flex: 1; background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.7rem 1.1rem;
+      color: var(--text); font-family: inherit; font-size: 0.92rem; outline: none;
+    }
+    .chat-input:focus { border-color: var(--primary); }
+    .chat-input:disabled { opacity: 0.55; }
+    .send-btn {
+      width: 44px; height: 44px; border-radius: 50%; border: none;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white; font-size: 1.15rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .send-btn:disabled { opacity: 0.5; }
+
+    .profile-section {
+      display: none; width: 100%;
+      flex-direction: column; gap: 1.1rem; padding-bottom: 2rem;
+    }
+    .profile-section.active { display: flex; }
+    .profile-header { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.6rem; }
+    .profile-avatar-big {
+      width: 100px; height: 100px; border-radius: 50%;
+      object-fit: cover; border: 3px solid var(--primary);
+    }
+    .profile-name-big { font-size: 1.4rem; font-weight: 700; }
+    .profile-meta { color: var(--text-muted); font-size: 0.9rem; }
+    .premium-badge {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      background: linear-gradient(135deg, #F59E0B, #FBBF24);
+      color: #000; padding: 0.25rem 0.8rem;
+      border-radius: 999px; font-size: 0.78rem; font-weight: 700;
+    }
+    .section-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.1rem;
+    }
+    .section-card h3 { font-size: 0.95rem; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.4rem; }
+    .likes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+    .like-card { aspect-ratio: 1; border-radius: 10px; overflow: hidden; position: relative; }
+    .like-card img { width: 100%; height: 100%; object-fit: cover; }
+    .like-card.blurred img { filter: blur(10px); }
+    .like-card .lock-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+    }
+    .setting-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.75rem 0; border-bottom: 1px solid var(--border); cursor: pointer;
+    }
+    .setting-item:last-child { border-bottom: none; }
+    .setting-item:hover { color: var(--primary); }
+
+    .bottom-nav {
+      display: flex; justify-content: space-around;
+      padding: 0.7rem 1rem 1.1rem;
+      border-top: 1px solid var(--border);
+      background: rgba(15,15,19,0.95);
+      backdrop-filter: blur(12px);
+      position: relative; z-index: 40;
+    }
+    .bottom-nav-btn {
+      background: none; border: none; color: var(--text-muted);
+      display: flex; flex-direction: column; align-items: center; gap: 0.25rem;
+      font-size: 0.68rem; font-family: inherit; cursor: pointer; padding: 0.25rem 0.7rem; position: relative;
+    }
+    .bottom-nav-btn.active { color: var(--primary); }
+    .bottom-nav-btn span { font-size: 1.3rem; }
+    .nav-badge {
+      position: absolute; top: 0; left: 16px;
+      background: var(--secondary); color: white;
+      font-size: 0.62rem; font-weight: 700;
+      min-width: 16px; height: 16px; border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: none; align-items: center; justify-content: center;
+      z-index: 100; padding: 1.2rem;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal {
+      background: var(--card);
+      border-radius: 22px;
+      padding: 1.8rem 1.4rem;
+      text-align: center;
+      max-width: 380px; width: 100%;
+      border: 1px solid var(--border);
+      max-height: 90vh; overflow-y: auto;
+    }
+    .modal h2 { font-size: 1.3rem; margin-bottom: 0.4rem; }
+    .modal p { color: var(--text-muted); margin-bottom: 1.3rem; font-size: 0.9rem; line-height: 1.6; }
+    .modal-actions { display: flex; flex-direction: column; gap: 0.6rem; }
+    .report-reasons { display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 1rem; text-align: right; }
+    .report-reason {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.7rem 0.9rem;
+      cursor: pointer; font-family: inherit; color: var(--text);
+      font-size: 0.9rem; text-align: right;
+    }
+    .report-reason:hover, .report-reason.selected {
+      border-color: var(--primary); background: rgba(139, 92, 246, 0.1);
+    }
+    .premium-features { text-align: right; margin-bottom: 1.3rem; }
+    .premium-features li {
+      list-style: none; padding: 0.4rem 0;
+      display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;
+    }
+    .premium-price {
+      font-size: 1.6rem; font-weight: 800; margin: 0.4rem 0 1rem;
+      background: linear-gradient(135deg, #F59E0B, #FBBF24);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .legal-screen {
+      display: none;
+      min-height: 100vh;
+      flex-direction: column;
+      background: var(--bg);
+    }
+    .legal-screen.active { display: flex; }
+    .legal-header {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.3rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0;
+      background: rgba(15,15,19,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+    .legal-header h1 { font-size: 1.15rem; font-weight: 700; }
+    .legal-content {
+      padding: 1.5rem 1.3rem 3rem;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.85;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+    .legal-content h2 {
+      color: var(--text);
+      font-size: 1.15rem;
+      margin: 1.8rem 0 0.7rem;
+    }
+    .legal-content h3 {
+      color: var(--text);
+      font-size: 1rem;
+      margin: 1.3rem 0 0.5rem;
+    }
+    .legal-content p { margin-bottom: 0.8rem; }
+    .legal-content ul { padding-right: 1.3rem; margin-bottom: 0.8rem; }
+    .legal-content li { margin-bottom: 0.4rem; }
+
+    .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
+    .empty-state h3 { font-size: 1.2rem; margin-bottom: 0.4rem; color: var(--text); }
+
+    @media (max-width: 480px) {
+      .nav { padding: 1rem; }
+      .nav-links a:not(.btn) { display: none; }
+      .card-stack { height: 460px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LANDING -->
+  <div class="landing" id="landing">
+    <nav class="nav">
+      <div class="logo"><div class="logo-icon">💜</div>آشنا</div>
+      <div class="nav-links">
+        <a onclick="showLegal('privacy')">حریم خصوصی</a>
+        <a onclick="showLegal('terms')">قوانین</a>
+        <button class="btn btn-outline" style="padding:0.55rem 1.1rem;font-size:0.9rem;" onclick="showAuth('login')">ورود</button>
+        <button class="btn btn-primary" style="padding:0.55rem 1.1rem;font-size:0.9rem;" onclick="showAuth('register')">ثبت‌نام</button>
+      </div>
+    </nav>
+    <div class="hero">
+      <h1>دوست و عشق واقعی را<br><span>نزدیک خود پیدا کن</span></h1>
+      <p>آشنا پلتفرم هوشمند دوست‌یابی با تأیید هویت، چت امن و نسخه پریمیوم. ورود فقط با ایمیل و رمز عبور.</p>
+
+    </div>
+  </div>
+
+  <!-- AUTH METHOD -->
+  <div class="auth-screen" id="authMethod">
+    <button class="back-link" onclick="backToLanding()">→ بازگشت</button>
+    <div class="auth-card">
+      <div class="logo" style="justify-content:center;margin-bottom:1.2rem;font-size:1.5rem;">
+        <div class="logo-icon">💜</div>آشنا
+      </div>
+      <h2 id="authTitle">ورود / ثبت‌نام</h2>
+      <p class="subtitle">برای استفاده از آشنا باید هویت خود را تأیید کنید</p>
+      <div id="emailForm">
+        <div class="form-group">
+          <label>آدرس ایمیل</label>
+          <input type="email" class="form-input" id="emailInput" placeholder="email@example.com" />
+        </div>
+        <div class="form-group">
+          <label>رمز عبور</label>
+          <input type="password" class="form-input" id="passwordInput" placeholder="حداقل ۶ کاراکتر" />
+        </div>
+      </div>
+      <div class="demo-hint">
+        💡 <strong>ورود واقعی با ایمیل</strong><br>
+        ایمیل و رمز عبور خود را وارد کنید.<br>
+        اگر حساب ندارید، به صورت خودکار ثبت‌نام می‌شوید.
+      </div>
+      <button class="btn btn-primary btn-block" onclick="sendOTP()">ورود / ثبت‌نام</button>
+      <div class="auth-footer">
+        با ادامه، <a onclick="showLegal('terms')">قوانین استفاده</a> و 
+        <a onclick="showLegal('privacy')">حریم خصوصی</a> را می‌پذیرید.
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTH OTP -->
+  <div class="auth-screen" id="authOTP">
+    <button class="back-link" onclick="showAuthScreen('authMethod')">→ بازگشت</button>
+    <div class="auth-card">
+      <h2>کد تأیید را وارد کنید</h2>
+      <p class="subtitle" id="otpSubtitle">کد ۴ رقمی ارسال‌شده را وارد کنید</p>
+      <div class="otp-inputs">
+        <input class="otp-input" type="text" maxlength="1" data-index="0" inputmode="numeric" />
+        <input class="otp-input" type="text" maxlength="1" data-index="1" inputmode="numeric" />
+        <input class="otp-input" type="text" maxlength="1" data-index="2" inputmode="numeric" />
+        <input class="otp-input" type="text" maxlength="1" data-index="3" inputmode="numeric" />
+      </div>
+      <div class="demo-hint">کد تأیید دمو: <strong>۱۲۳۴</strong></div>
+      <button class="btn btn-primary btn-block" onclick="verifyOTP()">تأیید و ورود</button>
+      <div class="resend-code">
+        کد را دریافت نکردید؟ <button onclick="resendOTP()">ارسال مجدد</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEGAL -->
+  <div class="legal-screen" id="legalScreen">
+    <div class="legal-header">
+      <button class="back-btn" onclick="closeLegal()" style="font-size:1.3rem;">→</button>
+      <h1 id="legalTitle">حریم خصوصی</h1>
+    </div>
+    <div class="legal-content" id="legalContent"></div>
+  </div>
+
+  <!-- APP -->
+  <div class="app" id="app">
+    <header class="app-header" id="appHeader">
+      <div class="app-logo">آشنا</div>
+      <div class="app-nav">
+        <button class="app-nav-btn active" id="nav-nearby" onclick="showSection('nearby')">نزدیک من</button>
+      </div>
+    </header>
+    <main class="main-content">
+      <div id="encounters-section">
+        <div class="card-stack" id="cardStack"></div>
+        <div class="actions">
+          <button class="action-btn dislike" onclick="swipe('left')">✕</button>
+          <button class="action-btn message" onclick="sendMessageToCurrent()">💬</button>
+          <button class="action-btn like" onclick="swipe('right')">♥</button>
+        </div>
+      </div>
+      <div class="nearby-grid" id="nearby-section"></div>
+      <div class="chat-section" id="chat-section">
+        <div class="chat-list-header">پیام‌ها</div>
+        <div class="chat-list" id="chatList"></div>
+      </div>
+      <div class="chat-view" id="chatView">
+        <div class="chat-view-header">
+          <button class="back-btn" onclick="closeChat()">→</button>
+          <img id="chatViewAvatar" class="chat-view-avatar" src="" />
+          <div class="chat-view-info">
+            <div class="chat-view-name" id="chatViewName"></div>
+            <div class="chat-view-status" id="chatViewStatus">آنلاین</div>
+          </div>
+          <button class="icon-btn" onclick="openReportModal()">🚩</button>
+          <button class="icon-btn" onclick="blockUser()">🚫</button>
+        </div>
+        <div class="messages-container" id="messagesContainer"></div>
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+        </div>
+        <div class="limit-notice" id="limitNotice"></div>
+        <div class="chat-input-area">
+          <input type="text" class="chat-input" id="chatInput" placeholder="پیام بنویس..." />
+          <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+        </div>
+      </div>
+      <div class="profile-section" id="profile-section">
+        <div class="profile-header">
+          <img src="https://i.pravatar.cc/150?img=12" class="profile-avatar-big" />
+          <div class="profile-name-big">شما <span id="myVerifiedBadge" style="display:none;" class="verified">✓</span></div>
+          <div class="profile-meta" id="userContact">—</div>
+          <div id="premiumBadge" class="premium-badge" style="display:none;">👑 پریمیوم</div>
+        </div>
+        <div class="section-card">
+          <h3>📸 تأیید هویت</h3>
+          <div id="verifyStatus">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
+              <div>
+                <div style="font-weight:600;margin-bottom:0.25rem;">وضعیت: تأیید نشده</div>
+                <div style="font-size:0.82rem;color:var(--text-muted);">با سلفی، نشان تأیید بگیر</div>
+              </div>
+              <button class="btn btn-primary" style="padding:0.45rem 0.9rem;font-size:0.82rem;" onclick="startVerification()">تأیید کن</button>
+            </div>
+          </div>
+        </div>
+        <div class="section-card">
+          <h3>💜 کسانی که لایکت کردن</h3>
+          <div class="likes-grid" id="likesGrid"></div>
+          <button class="btn btn-gold btn-block" style="margin-top:0.9rem;" id="unlockLikesBtn" onclick="openPremiumModal()">🔓 باز کردن با پریمیوم</button>
+        </div>
+        <div class="section-card">
+          <h3>👑 نسخه پریمیوم</h3>
+          <p style="color:var(--text-muted);font-size:0.88rem;margin-bottom:0.9rem;" id="premiumDesc">پیام نامحدود • دیدن لایک‌ها • سوایپ بیشتر</p>
+          <button class="btn btn-gold btn-block" id="premiumBtn" onclick="openPremiumModal()">ارتقا به پریمیوم</button>
+        </div>
+        <div class="section-card">
+          <div class="setting-item" onclick="showLegal('privacy')">📜 حریم خصوصی</div>
+          <div class="setting-item" onclick="showLegal('terms')">📋 قوانین استفاده</div>
+          <div class="setting-item" onclick="alert('در نسخه واقعی')">⚙️ تنظیمات</div>
+          <div class="setting-item" style="color:var(--danger);" onclick="logout()">خروج از حساب</div>
+        </div>
+      </div>
+    </main>
+    <nav class="bottom-nav">
+      <button class="bottom-nav-btn active" data-section="encounters" onclick="showSection('encounters')"><span>🔍</span>جستجو</button>
+      <button class="bottom-nav-btn" data-section="nearby" onclick="showSection('nearby')"><span>📍</span>نزدیک</button>
+      <button class="bottom-nav-btn" data-section="chat" onclick="showSection('chat')"><span>💬</span>پیام‌ها<span class="nav-badge" id="msgBadge" style="display:none;">0</span></button>
+      <button class="bottom-nav-btn" data-section="profile" onclick="showSection('profile')"><span>👤</span>پروفایل</button>
+    </nav>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal-overlay" id="matchModal">
+    <div class="modal">
+      <h2 style="background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">مچ شدی! 🎉</h2>
+      <p>شما و <span id="matchName"></span> همدیگه رو لایک کردید</p>
+      <div style="display:flex;justify-content:center;gap:1rem;margin-bottom:1.3rem;">
+        <img src="https://i.pravatar.cc/150?img=12" style="width:70px;height:70px;border-radius:50%;border:3px solid var(--primary);" />
+        <img id="matchAvatar" src="" style="width:70px;height:70px;border-radius:50%;border:3px solid var(--primary);" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="openChatFromMatch()">ارسال پیام</button>
+        <button class="btn btn-outline" onclick="closeMatch()">ادامه سوایپ</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay" id="reportModal">
+    <div class="modal">
+      <h2>🚩 گزارش کاربر</h2>
+      <p>دلیل گزارش را انتخاب کنید</p>
+      <div class="report-reasons" id="reportReasons">
+        <button class="report-reason" data-reason="spam">پیام اسپم یا تبلیغات</button>
+        <button class="report-reason" data-reason="fake">پروفایل جعلی</button>
+        <button class="report-reason" data-reason="harassment">آزار و اذیت</button>
+        <button class="report-reason" data-reason="inappropriate">محتوای نامناسب</button>
+        <button class="report-reason" data-reason="underage">سن کمتر از ۱۸</button>
+        <button class="report-reason" data-reason="other">سایر</button>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-danger" onclick="submitReport()">ارسال گزارش</button>
+        <button class="btn btn-outline" onclick="closeReportModal()">انصراف</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay" id="premiumModal">
+    <div class="modal">
+      <h2>👑 آشنا پریمیوم</h2>
+      <p>تجربه کامل بدون محدودیت</p>
+      <div class="premium-price">۱۴۹ هزار تومان / ماه</div>
+      <ul class="premium-features">
+        <li>✅ پیام نامحدود</li>
+        <li>✅ دیدن کسانی که لایکت کردن</li>
+        <li>✅ سوایپ نامحدود</li>
+        <li>✅ اولویت نمایش پروفایل</li>
+        <li>✅ بدون تبلیغات</li>
+      </ul>
+      <div class="modal-actions">
+        <button class="btn btn-gold" onclick="activatePremium()">فعال‌سازی (دمو)</button>
+        <button class="btn btn-outline" onclick="closePremiumModal()">بعداً</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay" id="verifyModal">
+    <div class="modal">
+      <h2>📸 تأیید هویت</h2>
+      <p>یک سلفی با ژست مشخص بگیر تا نشان تأیید دریافت کنی.</p>
+      <div style="background:var(--bg);border-radius:14px;padding:1.8rem;margin-bottom:1.3rem;border:2px dashed var(--border);">
+        <div style="font-size:2.8rem;">🤳</div>
+        <div style="font-size:0.88rem;color:var(--text-muted);margin-top:0.4rem;">ژست: دست راست بالا + لبخند</div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="completeVerification()">گرفتن سلفی (شبیه‌سازی)</button>
+        <button class="btn btn-outline" onclick="closeVerifyModal()">انصراف</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    /* ============================================================
+       آشنا - نسخه آماده برای اتصال به Firebase
+       ============================================================
+       
+       وضعیت فعلی: حالت دمو (DEMO_MODE = true)
+       - ورود با کد ۱۲۳۴ کار می‌کند
+       - همه قابلیت‌ها (چت، مچ، پریمیوم، گزارش، بلاک، حریم خصوصی) فعال هستند
+       
+       برای واقعی کردن برنامه:
+       ۱. یک پروژه در Firebase Console بساز (https://console.firebase.google.com)
+       ۲. Authentication را فعال کن (Phone + Email/Password)
+       ۳. Firestore و Storage را فعال کن
+       ۴. مقادیر firebaseConfig زیر را با مقادیر پروژه خودت جایگزین کن
+       ۵. DEMO_MODE را false کن
+       ۶. Cloud Functions برای handleLike و checkMessageLimit را دیپلوی کن
+       
+       ============================================================ */
+
+    const DEMO_MODE = false;   // Firebase متصل شده
+
+    // ---------- تنظیمات Firebase ----------
+    const firebaseConfig = {
+      apiKey: "AIzaSyCWRk4tJyP_NnEcj78T1fj1Z-qRSQxXv2E",
+      authDomain: "ashnaapp.firebaseapp.com",
+      projectId: "ashnaapp",
+      storageBucket: "ashnaapp.firebasestorage.app",
+      messagingSenderId: "762480202238",
+      appId: "1:762480202238:web:4d4335094a633b95eb70af",
+      measurementId: "G-5JYM61LLS4"
+    };
+    // ----------------------------------------------------
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let authMode = 'register', authMethod = 'email', currentContact = '', isLoggedIn = false;
+    const profiles = [
+      {id:1,name:"سارا",age:26,city:"تهران",distance:"۳ کیلومتر",bio:"علاقه‌مند به کتاب و سفر ☕",tags:["کتاب","سفر","موسیقی"],img:"https://i.pravatar.cc/400?img=5",verified:true,online:true},
+      {id:2,name:"نیما",age:29,city:"اصفهان",distance:"۱۲ کیلومتر",bio:"برنامه‌نویس و عاشق طبیعت 🏔️",tags:["طبیعت","کدنویسی","فیلم"],img:"https://i.pravatar.cc/400?img=11",verified:true,online:false},
+      {id:3,name:"مریم",age:24,city:"شیراز",distance:"۵ کیلومتر",bio:"طراح گرافیک و عکاسی ✨",tags:["هنر","عکاسی","کافه"],img:"https://i.pravatar.cc/400?img=9",verified:false,online:true},
+      {id:4,name:"آرش",age:31,city:"تهران",distance:"۸ کیلومتر",bio:"کارآفرین و ورزشکار 📖",tags:["ورزش","کسب‌وکار","کتاب"],img:"https://i.pravatar.cc/400?img=13",verified:true,online:true},
+      {id:5,name:"النا",age:27,city:"مشهد",distance:"۲ کیلومتر",bio:"معلم زبان و عاشق آشپزی 🍝",tags:["زبان","فیلم","آشپزی"],img:"https://i.pravatar.cc/400?img=16",verified:true,online:false},
+      {id:6,name:"پارسا",age:25,city:"کرج",distance:"۱۵ کیلومتر",bio:"دانشجوی پزشکی 🎮",tags:["پزشکی","گیم","موسیقی"],img:"https://i.pravatar.cc/400?img=15",verified:false,online:true},
+      {id:7,name:"نسترن",age:23,city:"تهران",distance:"۴ کیلومتر",bio:"طراح لباس 👗",tags:["مد","طراحی","کافه"],img:"https://i.pravatar.cc/400?img=20",verified:true,online:true},
+      {id:8,name:"کیان",age:28,city:"تبریز",distance:"۷ کیلومتر",bio:"مهندس مکانیک 🚗",tags:["ماشین","سفر","عکاسی"],img:"https://i.pravatar.cc/400?img=33",verified:true,online:false}
+    ];
+    let chats = {
+      1:{messages:[{text:"سلام! چطوری؟ 😊",from:"them",time:"۱۰:۲۴"},{text:"سلام سارا، خوبم.",from:"me",time:"۱۰:۲۶"}],lastTime:"۱۰:۲۶",unread:1},
+      4:{messages:[{text:"سلام آرش!",from:"me",time:"۱ ساعت پیش"},{text:"سلام! خوشحالم.",from:"them",time:"۵۰ دقیقه پیش"}],lastTime:"۵۰ دقیقه پیش",unread:1}
+    };
+    const autoReplies = ["جالبه! 😊","آره دقیقاً","خیلی باحاله 🔥","موافقم","چه جالب!","باشه 🌟","درست میگی","عالی"];
+    let currentIndex=0, isAnimating=false, currentChatId=null, lastMatchedProfile=null;
+    let isPremium=false, isVerified=false, blockedUsers=[];
+    let selectedReportReason=null;
+    const whoLikedMe = [profiles[0],profiles[2],profiles[4],profiles[6]];
+
+    function showAuth(mode) {
+      authMode = mode;
+      document.getElementById('landing').style.display = 'none';
+      document.getElementById('authMethod').classList.add('active');
+      document.getElementById('authTitle').textContent = mode === 'login' ? 'ورود به آشنا' : 'ثبت‌نام در آشنا';
+      document.getElementById('emailInput').value = '';
+      document.getElementById('passwordInput').value = '';
+    }
+    function backToLanding() {
+      document.getElementById('authMethod').classList.remove('active');
+      document.getElementById('authOTP').classList.remove('active');
+      document.getElementById('landing').style.display = 'flex';
+    }
+    function showAuthScreen(id) {
+      document.querySelectorAll('.auth-screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+    function switchAuthTab(method) {
+      // فقط ایمیل فعال است
+      authMethod = 'email';
+    }
+    function sendOTP() {
+      const email = document.getElementById('emailInput').value.trim();
+      const password = document.getElementById('passwordInput').value;
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert('ایمیل معتبر وارد کنید');
+        return;
+      }
+      if (!password || password.length < 6) {
+        alert('رمز عبور باید حداقل ۶ کاراکتر باشد');
+        return;
+      }
+
+      currentContact = email;
+      const btn = document.querySelector('#authMethod .btn-primary');
+      if (btn) { btn.disabled = true; btn.textContent = 'لطفاً صبر کنید...'; }
+
+      // تلاش برای ورود
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          isLoggedIn = true;
+          document.getElementById('authMethod').classList.remove('active');
+          document.getElementById('userContact').textContent = email;
+          startApp();
+        })
+        .catch((error) => {
+          if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-login-credentials') {
+            // ثبت‌نام جدید
+            auth.createUserWithEmailAndPassword(email, password)
+              .then((userCredential) => {
+                return db.collection('users').doc(userCredential.user.uid).set({
+                  email: email,
+                  createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                  isPremium: false,
+                  isVerified: false
+                }).then(() => {
+                  isLoggedIn = true;
+                  document.getElementById('authMethod').classList.remove('active');
+                  document.getElementById('userContact').textContent = email;
+                  startApp();
+                  alert('حساب شما با موفقیت ساخته شد 🎉');
+                });
+              })
+              .catch((err) => {
+                alert('خطا در ثبت‌نام: ' + err.message);
+                if (btn) { btn.disabled = false; btn.textContent = 'ورود / ثبت‌نام'; }
+              });
+          } else {
+            alert('خطا: ' + error.message);
+            if (btn) { btn.disabled = false; btn.textContent = 'ورود / ثبت‌نام'; }
+          }
+        });
+    }
+    function resendOTP() {}
+    function verifyOTP() {}
+    document.querySelectorAll('.otp-input').forEach((input, idx, arr) => {
+      input.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/\D/g, '').slice(0,1);
+        if (e.target.value && idx < arr.length-1) arr[idx+1].focus();
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !e.target.value && idx > 0) arr[idx-1].focus();
+      });
+      input.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const paste = (e.clipboardData.getData('text') || '').replace(/\D/g,'').slice(0,4);
+        paste.split('').forEach((ch, i) => { if (arr[i]) arr[i].value = ch; });
+        if (paste.length === 4) arr[3].focus();
+      });
+    });
+
+    const privacyHTML = `
+      <p>آخرین به‌روزرسانی: شهریور ۱۴۰۴</p>
+      <h2>۱. مقدمه</h2>
+      <p>پلتفرم «آشنا» متعهد به حفظ حریم خصوصی کاربران خود است. این سند توضیح می‌دهد که چه اطلاعاتی جمع‌آوری می‌کنیم، چگونه از آن‌ها استفاده می‌کنیم و چه حقوقی دارید.</p>
+      <h2>۲. اطلاعاتی که جمع‌آوری می‌کنیم</h2>
+      <h3>۲.۱ اطلاعات ثبت‌نام</h3>
+      <ul>
+        <li>شماره موبایل یا آدرس ایمیل</li>
+        <li>نام، سن، جنسیت و موقعیت مکانی تقریبی</li>
+        <li>عکس‌های پروفایل و بیو</li>
+      </ul>
+      <h3>۲.۲ اطلاعات استفاده</h3>
+      <ul>
+        <li>لایک‌ها، دیسلایک‌ها و مچ‌ها</li>
+        <li>پیام‌های رد و بدل شده (برای امنیت و پشتیبانی)</li>
+        <li>گزارش‌ها و بلاک‌ها</li>
+      </ul>
+      <h3>۲.۳ اطلاعات فنی</h3>
+      <ul>
+        <li>آدرس IP، نوع دستگاه و مرورگر</li>
+        <li>داده‌های تقریبی موقعیت (برای نمایش افراد نزدیک)</li>
+      </ul>
+      <h2>۳. نحوه استفاده از اطلاعات</h2>
+      <ul>
+        <li>ارائه و بهبود خدمات دوست‌یابی</li>
+        <li>تأیید هویت و جلوگیری از سوءاستفاده</li>
+        <li>نمایش پروفایل‌های مرتبط و نزدیک</li>
+        <li>ارسال اعلان‌های مربوط به مچ و پیام</li>
+        <li>بررسی گزارش‌ها و حفظ امنیت جامعه</li>
+      </ul>
+      <h2>۴. اشتراک‌گذاری اطلاعات</h2>
+      <p>ما اطلاعات شخصی شما را به اشخاص ثالث نمی‌فروشیم. اطلاعات فقط در موارد زیر ممکن است به اشتراک گذاشته شود:</p>
+      <ul>
+        <li>با رضایت صریح شما</li>
+        <li>در صورت الزام قانونی</li>
+        <li>با ارائه‌دهندگان خدمات فنی تحت قرارداد محرمانگی</li>
+      </ul>
+      <h2>۵. امنیت داده‌ها</h2>
+      <p>از روش‌های رمزنگاری، کنترل دسترسی و نظارت مداوم برای حفاظت از داده‌های شما استفاده می‌کنیم.</p>
+      <h2>۶. حقوق شما</h2>
+      <ul>
+        <li>دسترسی به داده‌های خود و درخواست اصلاح یا حذف</li>
+        <li>غیرفعال کردن حساب کاربری</li>
+        <li>انصراف از دریافت پیام‌های تبلیغاتی</li>
+      </ul>
+      <h2>۷. کاربران زیر ۱۸ سال</h2>
+      <p>استفاده از آشنا فقط برای افراد ۱۸ سال و بالاتر مجاز است. در صورت شناسایی کاربر زیر سن قانونی، حساب او حذف خواهد شد.</p>
+      <h2>۸. تماس با ما</h2>
+      <p>برای سؤالات مربوط به حریم خصوصی از طریق پشتیبانی داخل اپ با ما در ارتباط باشید.</p>
+    `;
+
+    const termsHTML = `
+      <p>آخرین به‌روزرسانی: شهریور ۱۴۰۴</p>
+      <h2>۱. پذیرش قوانین</h2>
+      <p>با ثبت‌نام و استفاده از پلتفرم «آشنا»، شما این قوانین را می‌پذیرید.</p>
+      <h2>۲. شرایط عضویت</h2>
+      <ul>
+        <li>حداقل سن ۱۸ سال تمام</li>
+        <li>ارائه اطلاعات صحیح و به‌روز</li>
+        <li>تأیید شماره موبایل یا ایمیل</li>
+        <li>استفاده از عکس واقعی خودتان</li>
+      </ul>
+      <h2>۳. رفتار مجاز و غیرمجاز</h2>
+      <h3>مجاز:</h3>
+      <ul>
+        <li>گفتگوی محترمانه و دوستانه</li>
+        <li>گزارش رفتارهای نامناسب</li>
+      </ul>
+      <h3>غیرمجاز (منجر به مسدودسازی):</h3>
+      <ul>
+        <li>ارسال محتوای جنسی، توهین‌آمیز یا خشونت‌آمیز</li>
+        <li>آزار، تهدید یا سوءاستفاده از دیگران</li>
+        <li>استفاده از هویت جعلی یا عکس دیگران</li>
+        <li>تبلیغات تجاری بدون مجوز</li>
+        <li>درخواست اطلاعات مالی یا کلاهبرداری</li>
+        <li>ایجاد چندین حساب برای دور زدن محدودیت‌ها</li>
+      </ul>
+      <h2>۴. محتوای کاربر</h2>
+      <p>شما مسئول تمام محتوایی هستید که در پروفایل و چت‌ها منتشر می‌کنید. آشنا حق حذف محتوای ناقض قوانین را دارد.</p>
+      <h2>۵. محدودیت پیام رایگان</h2>
+      <p>کاربران رایگان می‌توانند حداکثر ۳ پیام به هر فرد ارسال کنند تا زمانی که طرف مقابل پاسخ دهد. نسخه پریمیوم این محدودیت را برمی‌دارد.</p>
+      <h2>۶. نسخه پریمیوم</h2>
+      <p>خدمات پریمیوم به صورت اشتراکی ارائه می‌شود.</p>
+      <h2>۷. مسدودسازی و تعلیق</h2>
+      <p>آشنا حق دارد در صورت نقض قوانین، حساب کاربری را محدود یا مسدود کند.</p>
+      <h2>۸. سلب مسئولیت</h2>
+      <p>آشنا مسئول تعاملات خارج از پلتفرم یا رفتار کاربران نیست. کاربران باید احتیاط لازم را در ملاقات‌های حضوری رعایت کنند.</p>
+      <h2>۹. تغییرات قوانین</h2>
+      <p>ممکن است این قوانین به‌روزرسانی شوند. ادامه استفاده پس از تغییرات به معنای پذیرش آن‌هاست.</p>
+    `;
+
+    function showLegal(type) {
+      document.getElementById('landing').style.display = 'none';
+      document.querySelectorAll('.auth-screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('app').classList.remove('active');
+      document.getElementById('legalTitle').textContent = type === 'privacy' ? 'حریم خصوصی' : 'قوانین استفاده';
+      document.getElementById('legalContent').innerHTML = type === 'privacy' ? privacyHTML : termsHTML;
+      document.getElementById('legalScreen').classList.add('active');
+      window.scrollTo(0,0);
+    }
+    function closeLegal() {
+      document.getElementById('legalScreen').classList.remove('active');
+      if (isLoggedIn) document.getElementById('app').classList.add('active');
+      else document.getElementById('landing').style.display = 'flex';
+    }
+
+    function startApp() {
+      document.getElementById('app').classList.add('active');
+      renderCards(); renderNearby(); renderChatList(); renderLikes(); updateBadge();
+      if (DEMO_MODE) {
+        console.log('%cآشنا - حالت دمو فعال است', 'color:#8B5CF6;font-weight:bold;font-size:14px');
+        console.log('برای اتصال به Firebase: DEMO_MODE را false کنید و firebaseConfig را پر کنید.');
+      }
+    }
+
+    function renderCards() {
+      const stack = document.getElementById('cardStack');
+      stack.innerHTML = '';
+      const available = profiles.filter(p => !blockedUsers.includes(p.id));
+      if (currentIndex >= available.length) {
+        stack.innerHTML = '<div class="empty-state"><h3>پروفایل‌های امروز تموم شد!</h3><button class="btn btn-primary" style="margin-top:1.2rem;" onclick="currentIndex=0;renderCards();">شروع مجدد</button></div>';
+        return;
+      }
+      for (let i = Math.min(currentIndex+1, available.length-1); i >= currentIndex; i--) {
+        const p = available[i];
+        const card = document.createElement('div');
+        card.className = 'profile-card';
+        card.innerHTML = '<img class="card-img" src="'+p.img+'" /><div class="card-info"><div class="card-name">'+p.name+'، '+p.age+(p.verified?' <span class="verified">✓</span>':'')+'</div><div class="card-meta">'+p.city+' • '+p.distance+'</div><div class="card-bio">'+p.bio+'</div><div class="card-tags">'+p.tags.map(t=>'<span class="tag">'+t+'</span>').join('')+'</div></div>';
+        stack.appendChild(card);
+      }
+    }
+    function renderNearby() {
+      const available = profiles.filter(p => !blockedUsers.includes(p.id));
+      document.getElementById('nearby-section').innerHTML = available.map(p => '<div class="nearby-card" onclick="sendMessageToProfile('+p.id+')"><img class="nearby-img" src="'+p.img+'" /><div class="nearby-info"><div class="nearby-name">'+p.name+'، '+p.age+'</div><div class="nearby-dist">'+p.distance+'</div></div></div>').join('');
+    }
+    function renderLikes() {
+      document.getElementById('likesGrid').innerHTML = whoLikedMe.map(p => '<div class="like-card '+(isPremium?'':'blurred')+'"><img src="'+p.img+'" />'+(isPremium?'':'<div class="lock-overlay">🔒</div>')+'</div>').join('');
+      document.getElementById('unlockLikesBtn').style.display = isPremium ? 'none' : 'block';
+    }
+    function renderChatList() {
+      const list = document.getElementById('chatList');
+      const ids = Object.keys(chats).map(Number).filter(id => !blockedUsers.includes(id));
+      if (!ids.length) {
+        list.innerHTML = '<div class="empty-state"><h3>هنوز پیامی نداری</h3><p>از دکمه 💬 پیام بده</p></div>';
+        return;
+      }
+      list.innerHTML = ids.map(id => {
+        const p = profiles.find(x => x.id === id);
+        const c = chats[id];
+        const last = c.messages.length ? c.messages[c.messages.length-1] : null;
+        const preview = last ? (last.from==='me'?'شما: '+last.text:last.text) : 'شروع گفتگو...';
+        return '<div class="chat-item '+(c.unread?'unread':'')+'" onclick="openChat('+id+')"><div class="chat-avatar-wrap"><img class="chat-avatar" src="'+p.img+'" />'+(p.online?'<div class="online-dot"></div>':'')+'</div><div class="chat-item-info"><div class="chat-item-top"><span class="chat-item-name">'+p.name+'</span><span class="chat-item-time">'+c.lastTime+'</span></div><div class="chat-item-preview">'+preview+'</div></div>'+(c.unread?'<div class="unread-badge">'+c.unread+'</div>':'')+'</div>';
+      }).join('');
+    }
+    function updateBadge() {
+      const total = Object.entries(chats).filter(([id])=>!blockedUsers.includes(+id)).reduce((s,[,c])=>s+c.unread,0);
+      const b = document.getElementById('msgBadge');
+      b.style.display = total>0?'flex':'none';
+      b.textContent = total;
+    }
+    function isLimitActive(id) {
+      if (isPremium) return false;
+      const c = chats[id];
+      if (!c) return false;
+      if (c.messages.some(m=>m.from==='them')) return false;
+      return c.messages.filter(m=>m.from==='me').length >= 3;
+    }
+    function updateChatInputState() {
+      if (!currentChatId) return;
+      const limited = isLimitActive(currentChatId);
+      const rem = isPremium ? Infinity : Math.max(0, 3 - (chats[currentChatId]?.messages.filter(m=>m.from==='me').length||0));
+      const hasReply = chats[currentChatId]?.messages.some(m=>m.from==='them');
+      const input = document.getElementById('chatInput');
+      const btn = document.getElementById('sendBtn');
+      const notice = document.getElementById('limitNotice');
+      if (limited) {
+        input.disabled = true; btn.disabled = true;
+        notice.classList.add('show');
+        notice.innerHTML = '🚫 محدودیت ۳ پیام تمام شد. <span style="color:var(--gold);cursor:pointer" onclick="openPremiumModal()">پریمیوم</span> بگیر.';
+      } else {
+        input.disabled = false; btn.disabled = false;
+        if (!hasReply && rem < 3) {
+          notice.classList.add('show');
+          notice.innerHTML = '⚠️ '+rem+' پیام رایگان باقی‌مانده. با <span style="color:var(--gold);cursor:pointer" onclick="openPremiumModal()">پریمیوم</span> نامحدود شو.';
+        } else notice.classList.remove('show');
+      }
+    }
+    function swipe(dir) {
+      if (isAnimating) return;
+      const available = profiles.filter(p=>!blockedUsers.includes(p.id));
+      if (currentIndex >= available.length) return;
+      isAnimating = true;
+      const cards = document.querySelectorAll('.profile-card');
+      const top = cards[cards.length-1];
+      if (dir==='right') {
+        top.classList.add('swipe-right');
+        if (Math.random()<0.4) setTimeout(()=>showMatch(available[currentIndex]),350);
+      } else top.classList.add('swipe-left');
+      setTimeout(()=>{ currentIndex++; renderCards(); isAnimating=false; },400);
+    }
+    function sendMessageToCurrent() {
+      const available = profiles.filter(p=>!blockedUsers.includes(p.id));
+      if (currentIndex >= available.length) return;
+      sendMessageToProfile(available[currentIndex].id);
+    }
+    function sendMessageToProfile(id) {
+      if (!chats[id]) chats[id] = {messages:[], lastTime:'الان', unread:0};
+      showSection('chat');
+      openChat(id);
+    }
+    function showMatch(p) {
+      lastMatchedProfile = p;
+      document.getElementById('matchName').textContent = p.name;
+      document.getElementById('matchAvatar').src = p.img;
+      document.getElementById('matchModal').classList.add('show');
+      if (!chats[p.id]) {
+        chats[p.id] = {messages:[{text:'سلام '+p.name+'! مچ شدیم 🎉',from:'me',time:'الان'}], lastTime:'الان', unread:0};
+        renderChatList(); updateBadge();
+      }
+    }
+    function closeMatch() { document.getElementById('matchModal').classList.remove('show'); }
+    function openChatFromMatch() { closeMatch(); if(lastMatchedProfile){ showSection('chat'); openChat(lastMatchedProfile.id); } }
+    function openChat(id) {
+      if (blockedUsers.includes(id)) return;
+      currentChatId = id;
+      const p = profiles.find(x=>x.id===id);
+      const c = chats[id];
+      c.unread = 0; updateBadge(); renderChatList();
+      document.getElementById('chatViewAvatar').src = p.img;
+      document.getElementById('chatViewName').textContent = p.name + (p.verified?' ✓':'');
+      const st = document.getElementById('chatViewStatus');
+      st.textContent = p.online?'آنلاین':'آفلاین';
+      st.className = 'chat-view-status'+(p.online?'':' offline');
+      document.getElementById('messagesContainer').innerHTML = c.messages.map(m=>
+        '<div class="message '+(m.from==='me'?'sent':'received')+'">'+m.text+'<div class="message-time">'+m.time+'</div></div>'
+      ).join('');
+      const chatView = document.getElementById('chatView');
+      chatView.style.display = 'flex';
+      chatView.classList.add('active');
+      document.getElementById('messagesContainer').scrollTop = 9999;
+      updateChatInputState();
+    }
+    function closeChat() {
+      const chatView = document.getElementById('chatView');
+      chatView.style.display = 'none';
+      chatView.classList.remove('active');
+      currentChatId = null;
+      document.getElementById('chatInput').value = '';
+      document.getElementById('limitNotice').classList.remove('show');
+    }
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text || !currentChatId || isLimitActive(currentChatId)) return;
+      const c = chats[currentChatId];
+      const time = new Date().toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'});
+      c.messages.push({text, from:'me', time});
+      c.lastTime = 'الان';
+      const cont = document.getElementById('messagesContainer');
+      cont.innerHTML += '<div class="message sent">'+text+'<div class="message-time">'+time+'</div></div>';
+      cont.scrollTop = 9999;
+      input.value = '';
+      renderChatList();
+      updateChatInputState();
+      const p = profiles.find(x=>x.id===currentChatId);
+      if (p?.online) {
+        setTimeout(()=>document.getElementById('typingIndicator').classList.add('show'),700);
+        setTimeout(()=>{
+          document.getElementById('typingIndicator').classList.remove('show');
+          const reply = autoReplies[Math.floor(Math.random()*autoReplies.length)];
+          const rt = new Date().toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'});
+          c.messages.push({text:reply, from:'them', time:rt});
+          c.lastTime = 'الان';
+          cont.innerHTML += '<div class="message received">'+reply+'<div class="message-time">'+rt+'</div></div>';
+          cont.scrollTop = 9999;
+          renderChatList();
+          updateChatInputState();
+        }, 1600+Math.random()*900);
+      }
+    }
+    function openReportModal() {
+      selectedReportReason = null;
+      document.querySelectorAll('.report-reason').forEach(b=>b.classList.remove('selected'));
+      document.getElementById('reportModal').classList.add('show');
+    }
+    function closeReportModal() { document.getElementById('reportModal').classList.remove('show'); }
+    document.getElementById('reportReasons').addEventListener('click', e => {
+      if (e.target.classList.contains('report-reason')) {
+        document.querySelectorAll('.report-reason').forEach(b=>b.classList.remove('selected'));
+        e.target.classList.add('selected');
+        selectedReportReason = e.target.dataset.reason;
+      }
+    });
+    function submitReport() {
+      if (!selectedReportReason) { alert('یک دلیل انتخاب کنید'); return; }
+      alert('گزارش ثبت شد. تیم پشتیبانی بررسی می‌کند.');
+      closeReportModal();
+      if (confirm('می‌خواهید این کاربر را هم بلاک کنید؟')) blockUser();
+    }
+    function blockUser() {
+      if (!currentChatId || !confirm('این کاربر بلاک شود؟')) return;
+      blockedUsers.push(currentChatId);
+      delete chats[currentChatId];
+      closeChat();
+      renderChatList(); renderCards(); renderNearby(); updateBadge();
+      alert('کاربر بلاک شد.');
+    }
+    function openPremiumModal() { document.getElementById('premiumModal').classList.add('show'); }
+    function closePremiumModal() { document.getElementById('premiumModal').classList.remove('show'); }
+    function activatePremium() {
+      isPremium = true;
+      document.getElementById('premiumBadge').style.display = 'inline-flex';
+      document.getElementById('premiumBtn').textContent = 'پریمیوم فعال است ✓';
+      document.getElementById('premiumBtn').disabled = true;
+      document.getElementById('premiumDesc').textContent = 'شما نسخه پریمیوم دارید.';
+      renderLikes(); updateChatInputState();
+      closePremiumModal();
+      alert('🎉 پریمیوم فعال شد (دمو)');
+    }
+    function startVerification() { document.getElementById('verifyModal').classList.add('show'); }
+    function closeVerifyModal() { document.getElementById('verifyModal').classList.remove('show'); }
+    function completeVerification() {
+      isVerified = true;
+      document.getElementById('myVerifiedBadge').style.display = 'inline-flex';
+      document.getElementById('verifyStatus').innerHTML = '<div style="color:var(--success);font-weight:600;">✅ هویت شما تأیید شد</div><div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.3rem;">نشان آبی روی پروفایلتان نمایش داده می‌شود</div>';
+      closeVerifyModal();
+    }
+    function logout() {
+      if (!confirm('از حساب خارج می‌شوید؟')) return;
+      isLoggedIn = false; isPremium = false; isVerified = false;
+      document.getElementById('app').classList.remove('active');
+      document.getElementById('landing').style.display = 'flex';
+      document.querySelectorAll('.otp-input').forEach(i => i.value = '');
+    }
+    function showSection(section) {
+      // Hide all sections
+      const encounters = document.getElementById('encounters-section');
+      const nearby = document.getElementById('nearby-section');
+      const chatSec = document.getElementById('chat-section');
+      const chatView = document.getElementById('chatView');
+      const profile = document.getElementById('profile-section');
+
+      encounters.style.display = 'none';
+      nearby.style.display = 'none'; nearby.classList.remove('active');
+      chatSec.style.display = 'none'; chatSec.classList.remove('active');
+      chatView.style.display = 'none'; chatView.classList.remove('active');
+      profile.style.display = 'none'; profile.classList.remove('active');
+
+      const navEnc = document.getElementById('nav-encounters'); if(navEnc) navEnc.classList.toggle('active', section==='encounters');
+      document.getElementById('nav-nearby').classList.toggle('active', section==='nearby');
+      document.querySelectorAll('.bottom-nav-btn').forEach(b => b.classList.toggle('active', b.dataset.section===section));
+
+      if (section==='encounters') {
+        encounters.style.display = 'block';
+        document.getElementById('appHeader').style.display = 'flex';
+      } else if (section==='nearby') {
+        nearby.style.display = 'grid';
+        nearby.classList.add('active');
+        document.getElementById('appHeader').style.display = 'flex';
+        renderNearby();
+      } else if (section==='chat') {
+        chatSec.style.display = 'flex';
+        chatSec.classList.add('active');
+        document.getElementById('appHeader').style.display = 'none';
+        renderChatList();
+      } else if (section==='profile') {
+        profile.style.display = 'flex';
+        profile.classList.add('active');
+        document.getElementById('appHeader').style.display = 'none';
+        renderLikes();
+      }
+    }
+    document.addEventListener('keypress', e => {
+      if (e.key==='Enter' && document.getElementById('chatView').classList.contains('active')) sendMessage();
+    });
+  </script>
+</body>
+</html>
